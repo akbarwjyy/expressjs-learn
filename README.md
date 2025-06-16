@@ -191,7 +191,7 @@ This project is for educational purposes and is open for learning and experiment
 
 ## Author
 
-[Your Name]
+Akbar Wijaya
 
 ## Acknowledgments
 
