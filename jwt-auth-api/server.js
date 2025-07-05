@@ -5,12 +5,16 @@ const authRoutes = require("./routes/authRoutes");
 
 app.use(express.json());
 
-app.use("api/auth", authRoutes);
+app.use("/api/auth", authRoutes);
 
 // test protected route
-app.get("/api/profile", require("./middlewares/authMiddleware"), (req, res) => {
-  res.json({ message: `Selamat datang ${req.user.username}` });
-});
+app.get(
+  "/api/profile",
+  require("./middlewares/authMiddlewares"),
+  (req, res) => {
+    res.json({ message: `Selamat datang ${req.user.username}` });
+  }
+);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server berjalan di http://localhost:${process.env.PORT}`);
