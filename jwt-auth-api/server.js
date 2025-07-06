@@ -1,20 +1,22 @@
-require("dotenv").config();
 const express = require("express");
-const app = express();
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
 const authRoutes = require("./routes/authRoutes");
 
+dotenv.config();
+const app = express();
 app.use(express.json());
 
-app.use("/api/auth", authRoutes);
+// KONEKSI ke MongoDB
+mongoose
+  .connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log("MongoDB connected"))
+  .catch((err) => console.error("MongoDB error:", err));
 
-// test protected route
-app.get(
-  "/api/profile",
-  require("./middlewares/authMiddlewares"),
-  (req, res) => {
-    res.json({ message: `Selamat datang ${req.user.username}` });
-  }
-);
+app.use("/api/auth", authRoutes);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server berjalan di http://localhost:${process.env.PORT}`);
