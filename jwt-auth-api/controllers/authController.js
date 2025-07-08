@@ -12,6 +12,13 @@ const generateToken = (user) => {
 
 exports.register = async (req, res) => {
   const { username, password } = req.body;
+
+  if (!username || !password) {
+    return res
+      .status(400)
+      .json({ message: "Username dan password harus diisi" });
+  }
+
   try {
     const existingUser = await User.findOne({ username });
     if (existingUser)
@@ -30,6 +37,13 @@ exports.register = async (req, res) => {
 
 exports.login = async (req, res) => {
   const { username, password } = req.body;
+
+  if (!username || !password) {
+    return res
+      .status(400)
+      .json({ message: "Username dan password harus diisi" });
+  }
+
   try {
     const user = await User.findOne({ username });
     if (!user) return res.status(400).json({ message: "User tidak ditemukan" });
